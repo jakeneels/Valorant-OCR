@@ -1,0 +1,23 @@
+
+service: ocr
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  stage: dev
+
+plugins:
+  -serverless-offline
+
+environment:
+  STAGE: ${opt:stage, self:provider.stage}
+
+functions:
+  ocr:
+    handler: handler.ocr
+    timeout: 30
+    events:
+      - http:
+          path: ocr
+          method: post
+          cors: false
